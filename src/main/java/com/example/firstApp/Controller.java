@@ -5,6 +5,8 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import com.example.firstApp.animations.Shake;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -47,21 +49,8 @@ public class Controller {
         });
 
         LoginSingUpButton.setOnAction(event -> {
-            LoginSingUpButton.getScene().getWindow().hide();
+            openNewScene("singUp.fxml");
 
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("singUp.fxml"));
-
-            try {
-                loader.load();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-//                e.printStackTrace();
-            }
-            Parent root = loader.getRoot();
-            Stage stage = new Stage();
-            stage.setScene(new Scene(root));
-            stage.showAndWait();
         });
     }
 
@@ -83,6 +72,30 @@ public class Controller {
 
        if(counter >= 1) {
            System.out.println("Success");
+           openNewScene("app.fxml");
        }
+        else{
+           Shake userLoginAnim = new Shake(loginField);
+           Shake userPassAnim = new Shake(passwordField);
+           userLoginAnim.playAnim();
+           userPassAnim.playAnim();
+       }
+    }
+    public void openNewScene(String window){
+        LoginSingUpButton.getScene().getWindow().hide();
+
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(window));
+
+        try {
+            loader.load();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+//                e.printStackTrace();
+        }
+        Parent root = loader.getRoot();
+        Stage stage = new Stage();
+        stage.setScene(new Scene(root));
+        stage.showAndWait();
     }
 }

@@ -42,7 +42,30 @@ public class SingUpController {
 
     @FXML
     void initialize() {
-
+        singUpBtn.setOnAction( event -> {
+            singUpNewUser();
+    });
     }
+    private void singUpNewUser() {
 
+            DatabaseHandler dbHandler = new DatabaseHandler();
+
+            String firstName = singUpName.getText();
+            String lastName = singUpLastname.getText();
+            String userName = loginField.getText();
+            String password = passwordField.getText();
+            String country = singUpCountry.getText();
+            String gender = "";
+            if(singUpCheckBoxMale.isSelected())
+                gender = "Мужской";
+            else
+                gender = "Женский";
+
+            User user = new User(firstName, lastName, userName, password, country, gender);
+
+
+            dbHandler.singUpUser(user);
+
+
+  }
 }
